@@ -22,12 +22,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tabs = findViewById(R.id.my_tabs);
+        replaceFragment(new HomeFragment());
 
         // add tab listener
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.d("MainActivity", tab.getPosition() + "");
+                switch (tab.getPosition()) {
+                    case 0:
+                        replaceFragment(new HomeFragment());
+                        break;
+                    case 1:
+                        replaceFragment(new NotificationsFragment());
+                        break;
+                    case 2:
+                        replaceFragment(new UserFragment());
+                        break;
+                    default:
+                }
             }
 
             @Override
