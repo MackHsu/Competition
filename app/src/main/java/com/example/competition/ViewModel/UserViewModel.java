@@ -1,4 +1,4 @@
-package com.example.competition;
+package com.example.competition.ViewModel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

@@ -1,4 +1,4 @@
-package com.example.competition;
+package com.example.competition.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,10 +6,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
+import com.example.competition.Fragment.HomeFragment;
+import com.example.competition.Fragment.NotificationsFragment;
+import com.example.competition.Fragment.UserFragment;
+import com.example.competition.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
