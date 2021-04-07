@@ -21,6 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -32,8 +34,8 @@
                     android:layout_marginStart="19dp"
                     android:text="default name"
                     android:textSize="24sp"
-                    app:layout_constraintStart_toEndOf="@+id/radiusImageView"
-                    app:layout_constraintTop_toTopOf="@+id/radiusImageView" />
+                    app:layout_constraintStart_toEndOf="@+id/user_avatar"
+                    app:layout_constraintTop_toTopOf="@+id/user_avatar" />
 
                 <TextView
                     android:id="@+id/desc_text"
@@ -49,7 +51,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/name_text" />
 
                 <com.xuexiang.xui.widget.imageview.RadiusImageView
-                    android:id="@+id/radiusImageView"
+                    android:id="@+id/user_avatar"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

@@ -1,5 +1,6 @@
 package com.example.competition.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,15 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.competition.Activity.SignUpActivity;
 import com.example.competition.ViewModel.UserViewModel;
 import com.example.competition.databinding.FragmentUserBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class UserFragment extends Fragment {
 
     private String TAG = "UserFragment";
@@ -56,6 +54,14 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: FavoriteLayout");
+            }
+        });
+
+        binding.UserInfoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SignUpActivity.class);
+                startActivity(intent);
             }
         });
     }

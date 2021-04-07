@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.example.competition.Fragment.HomeFragment;
-import com.example.competition.Fragment.NotificationsFragment;
+import com.example.competition.Fragment.ConversationFragment;
 import com.example.competition.Fragment.UserFragment;
 import com.example.competition.R;
 import com.google.android.material.tabs.TabLayout;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(new HomeFragment());
                         break;
                     case 1:
-                        replaceFragment(new NotificationsFragment());
+                        replaceFragment(new ConversationFragment());
                         break;
                     case 2:
                         replaceFragment(new UserFragment());

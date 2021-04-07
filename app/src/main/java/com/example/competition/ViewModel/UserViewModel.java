@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModel;
 public class UserViewModel extends ViewModel {
     private MutableLiveData<String> testStr;
 
+    public UserViewModel() {
+        testStr = new MutableLiveData<>();
+        testStr.setValue("MainActivityViewModel");
+    }
+
     public MutableLiveData<String> getTestStr() {
-        if (testStr == null) {
-            testStr = new MutableLiveData<>();
-            testStr.setValue("Hello User Fragment");
-        }
         return testStr;
     }
 
