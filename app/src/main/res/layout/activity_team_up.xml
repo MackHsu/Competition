@@ -10,31 +10,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Activity.SignUpActivity">
-
-        <FrameLayout
-            android:id="@+id/sign_up_fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_up_titlebar">
-
-        </FrameLayout>
+        tools:context=".Activity.TeamUpActivity">
 
         <com.xuexiang.xui.widget.actionbar.TitleBar
-            android:id="@+id/sign_up_titlebar"
+            android:id="@+id/team_up_titlebar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tb_titleText="注册/登录"
+            app:tb_titleText="组队区"
             app:tb_useThemeColor="false">
 
         </com.xuexiang.xui.widget.actionbar.TitleBar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/team_up_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/team_up_titlebar" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

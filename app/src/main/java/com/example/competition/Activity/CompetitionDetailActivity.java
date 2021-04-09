@@ -43,8 +43,10 @@ public class CompetitionDetailActivity extends AppCompatActivity {
             fav = !fav;
         });
 
-        binding.competitionDetailDiscuss.setOnClickListener(view -> {
+        binding.competitionDetailTeam.setOnClickListener(view -> {
             binding.competitionDetailFloatingMenu.close(true);
+            Intent intent = new Intent(MyApp.getContext(), TeamUpActivity.class);
+            startActivity(intent);
         });
 
         binding.competitionDetailDiscuss.setOnClickListener(view -> {
