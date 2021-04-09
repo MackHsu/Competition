@@ -1,5 +1,6 @@
 package com.example.competition.RecyclerViewHolder;
 
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
