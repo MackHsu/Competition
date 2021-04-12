@@ -22,7 +22,6 @@ public class DiscussReplyAdapter extends BaseMultiItemQuickAdapter<DiscussReply,
 
     @Override
     protected void convert(@NotNull DiscussReplyViewHolder discussReplyViewHolder, DiscussReply discussReply) {
-        Log.d("DiscussReplyAdapter", "convert: ");
         int itemType = discussReply.getItemType();
         discussReplyViewHolder.setXuiLinearLayout(itemType);
         discussReplyViewHolder.setRadiusAndShadow();

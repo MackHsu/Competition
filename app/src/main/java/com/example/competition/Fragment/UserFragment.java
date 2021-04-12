@@ -14,7 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.competition.Activity.MyDiscussActivity;
+import com.example.competition.Activity.MyRecruitmentActivity;
 import com.example.competition.Activity.SignUpActivity;
+import com.example.competition.Model.MyRecruitment;
+import com.example.competition.MyApp;
 import com.example.competition.ViewModel.UserViewModel;
 import com.example.competition.databinding.FragmentUserBinding;
 
@@ -43,18 +47,16 @@ public class UserFragment extends Fragment {
     }
 
     private void initActions() {
-        binding.DiscussLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: DiscussLayout");
-            }
+        binding.DiscussLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(MyApp.getContext(), MyDiscussActivity.class);
+            startActivity(intent);
         });
 
-        binding.FavoriteLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: FavoriteLayout");
-            }
+        binding.FavoriteLayout.setOnClickListener(view -> Log.d(TAG, "onClick: FavoriteLayout"));
+
+        binding.TeamLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(MyApp.getContext(), MyRecruitmentActivity.class);
+            startActivity(intent);
         });
 
         binding.UserInfoLayout.setOnClickListener(new View.OnClickListener() {

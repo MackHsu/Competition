@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.example.competition.MyApp;
 import com.example.competition.R;
+import com.example.competition.RecyclerViewAdapter.DiscussListAdapter;
 import com.example.competition.databinding.ActivityCompetitionDetailBinding;
 import com.xuexiang.xui.widget.popupwindow.good.GoodView;
 import com.xuexiang.xui.widget.popupwindow.good.IGoodView;
@@ -51,7 +52,7 @@ public class CompetitionDetailActivity extends AppCompatActivity {
 
         binding.competitionDetailDiscuss.setOnClickListener(view -> {
             binding.competitionDetailFloatingMenu.close(true);
-            Intent intent = new Intent(MyApp.getContext(), DiscussActivity.class);
+            Intent intent = new Intent(MyApp.getContext(), DiscussListActivity.class);
             startActivity(intent);
         });
     }

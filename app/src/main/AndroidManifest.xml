@@ -10,7 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.TeamUpActivity"></activity>
+        <activity android:name=".Activity.MyRecruitmentActivity"></activity>
+        <activity android:name=".Activity.MyDiscussActivity" />
+        <activity android:name=".Activity.NewDiscussActivity" />
+        <activity android:name=".Activity.DiscussListActivity" />
+        <activity android:name=".Activity.TeamUpActivity" />
         <activity android:name=".Activity.DiscussActivity" />
         <activity android:name=".Activity.CompetitionDetailActivity" />
         <activity android:name=".Activity.SignUpActivity" />

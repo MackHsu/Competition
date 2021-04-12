@@ -10,42 +10,28 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Activity.DiscussActivity">
+        tools:context=".Activity.MyRecruitmentActivity">
 
         <com.xuexiang.xui.widget.actionbar.TitleBar
-            android:id="@+id/discuss_titlebar"
+            android:id="@+id/my_recruitment_list_titlebar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tb_titleText="Discuss Title"
-            app:tb_useThemeColor="false">
+            app:tb_titleText="我的组队需求"
+            app:tb_useThemeColor="false" >
 
         </com.xuexiang.xui.widget.actionbar.TitleBar>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/discuss_reply_recycler"
+            android:id="@+id/my_recruitment_recycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/discuss_titlebar" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/discuss_add_reply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_plus"
-            app:fab_colorNormal="#74ADF3"
-            app:fab_colorPressed="#6AA3EA"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/my_recruitment_list_titlebar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

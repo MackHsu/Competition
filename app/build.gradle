@@ -55,4 +55,7 @@ dependencies {
 
 //    FAB
     implementation 'com.github.clans:fab:1.6.4'
+
+//    dialog plus
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
 }

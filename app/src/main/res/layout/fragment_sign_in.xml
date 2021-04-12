@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.xuexiang.xui.widget.layout.XUILinearLayout
+                android:id="@+id/sign_in_xui_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="#FFFFFF"
+                android:padding="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+                        android:id="@+id/sign_in_account"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="帐号"
+                        android:inputType="textUri"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:met_floatingLabel="normal"
+                        app:met_floatingLabelText="帐号" />
+
+                    <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+                        android:id="@+id/sign_in_password"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:hint="密码"
+                        android:inputType="textUri|textVisiblePassword|textPassword"
+                        app:layout_constraintEnd_toEndOf="@+id/sign_in_account"
+                        app:layout_constraintStart_toStartOf="@+id/sign_in_account"
+                        app:layout_constraintTop_toBottomOf="@+id/sign_in_account"
+                        app:met_floatingLabel="normal"
+                        app:met_floatingLabelText="密码"
+                        app:met_passWordButton="true" />
+
+                    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                        android:id="@+id/sign_in_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="登录"
+                        app:layout_constraintEnd_toEndOf="@+id/sign_in_account"
+                        app:layout_constraintStart_toStartOf="@+id/sign_in_account"
+                        app:layout_constraintTop_toBottomOf="@+id/sign_in_password"
+                        app:rb_backgroundColor="@color/xui_btn_blue_normal_color" />
+
+                    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                        android:id="@+id/sign_in_to_sign_up"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="注册"
+                        android:textColor="@color/xui_btn_blue_normal_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/sign_in_account"
+                        app:layout_constraintStart_toStartOf="@+id/sign_in_account"
+                        app:layout_constraintTop_toBottomOf="@+id/sign_in_btn"
+                        app:rb_backgroundColor="@color/xui_transparent"
+                        app:rb_borderColor="@color/xui_btn_blue_normal_color" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.xuexiang.xui.widget.layout.XUILinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</layout>
