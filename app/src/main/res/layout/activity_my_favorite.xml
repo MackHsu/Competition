@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.MyFavoriteActivity">
+
+        <com.xuexiang.xui.widget.actionbar.TitleBar
+            android:id="@+id/my_favorite_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tb_titleText="我的收藏"
+            app:tb_useThemeColor="false" />
+
+        <com.xuexiang.xui.widget.tabbar.EasyIndicator
+            android:id="@+id/my_favorite_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:indicator_line_color="@color/xui_btn_blue_normal_color"
+            app:indicator_line_show="true"
+            app:indicator_selected_color="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_favorite_titlebar" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/my_favorite_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_favorite_indicator" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

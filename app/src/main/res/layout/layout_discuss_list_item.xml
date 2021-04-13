@@ -35,12 +35,25 @@
                     app:srcCompat="@drawable/ic_three_dots_2" />
 
                 <TextView
+                    android:id="@+id/discuss_list_item_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="discuss title"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toStartOf="@+id/discuss_list_item_action_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/discuss_list_item_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:text="TextView"
+                    android:text="username"
                     app:layout_constraintBottom_toBottomOf="@+id/discuss_list_item_avatar"
                     app:layout_constraintStart_toEndOf="@+id/discuss_list_item_avatar"
                     app:layout_constraintTop_toTopOf="@+id/discuss_list_item_avatar" />
@@ -51,9 +64,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="TextView"
+                    android:text="content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider14" />
+
+                <TextView
+                    android:id="@+id/discuss_list_item_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="time"
+                    app:layout_constraintBottom_toBottomOf="@+id/discuss_list_item_avatar"
+                    app:layout_constraintStart_toEndOf="@+id/discuss_list_item_username"
+                    app:layout_constraintTop_toTopOf="@+id/discuss_list_item_avatar" />
 
                 <View
                     android:id="@+id/divider14"
@@ -68,7 +91,7 @@
 
                 <com.xuexiang.xui.widget.imageview.RadiusImageView
                     android:id="@+id/discuss_list_item_avatar"
-                    android:layout_width="50dp"
+                    android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -76,7 +99,7 @@
                     android:src="@drawable/img_default_avatar"
                     app:layout_constraintBottom_toTopOf="@+id/divider14"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/discuss_list_item_title"
                     app:riv_border_color="@color/xui_config_color_gray_6"
                     app:riv_border_width="1px"
                     app:riv_is_circle="true"

@@ -50,11 +50,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void replaceFragment(int index) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        for (Fragment fragment: fragments) {
-//            if (fragment.isAdded()) continue;
-//            transaction.add(R.id.sign_up_fragment_container, fragment);
-//            transaction.hide(fragment);
-//        }
 
         Fragment fragment = fragments.get(index);
         if(currentFragment != null)

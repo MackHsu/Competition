@@ -13,9 +13,18 @@ import com.example.competition.Fragment.UserFragment;
 import com.example.competition.R;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-    TabLayout tabs;
+    private TabLayout tabs;
+    private Fragment currentFragment;
+
+    private List<Fragment> fragments = new ArrayList<>();
+    private static int HOME_FRAGMENT = 0;
+    private static int CONVERSATION_FRAGMENT = 1;
+    private static int USER_FRAGMENT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tabs = findViewById(R.id.my_tabs);
-        replaceFragment(new HomeFragment());
 
         // add tab listener
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -31,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        replaceFragment(new HomeFragment());
+                        replaceFragment(HOME_FRAGMENT);
                         break;
                     case 1:
-                        replaceFragment(new ConversationFragment());
+                        replaceFragment(CONVERSATION_FRAGMENT);
                         break;
                     case 2:
-                        replaceFragment(new UserFragment());
+                        replaceFragment(USER_FRAGMENT);
                         break;
                     default:
                 }
@@ -53,12 +61,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        fragments.add(new HomeFragment());
+        fragments.add(new ConversationFragment());
+        fragments.add(new UserFragment());
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        for (Fragment fragment : fragments) {
+            if (fragment.isAdded()) continue;
+            transaction.add(R.id.fragment_container, fragment);
+            transaction.hide(fragment);
+        }
+        transaction.commit();
+
+        replaceFragment(HOME_FRAGMENT);
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.commit();
+    private void replaceFragment(int index) {
+        Fragment fragment = fragments.get(index);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if(currentFragment != null)
+            transaction.hide(currentFragment);
+        transaction.show(fragment).commit();
+
+        currentFragment = fragment;
     }
 }

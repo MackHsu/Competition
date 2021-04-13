@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.competition.Activity.MyDiscussActivity;
+import com.example.competition.Activity.MyFavoriteActivity;
 import com.example.competition.Activity.MyRecruitmentActivity;
 import com.example.competition.Activity.SignUpActivity;
 import com.example.competition.Model.MyRecruitment;
@@ -52,7 +53,10 @@ public class UserFragment extends Fragment {
             startActivity(intent);
         });
 
-        binding.FavoriteLayout.setOnClickListener(view -> Log.d(TAG, "onClick: FavoriteLayout"));
+        binding.FavoriteLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(MyApp.getContext(), MyFavoriteActivity.class);
+            startActivity(intent);
+        });
 
         binding.TeamLayout.setOnClickListener(view -> {
             Intent intent = new Intent(MyApp.getContext(), MyRecruitmentActivity.class);
