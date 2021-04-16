@@ -189,6 +189,15 @@
                 app:fab_colorPressed="#92BBED"
                 app:fab_label="公告" />
 
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/competition_detail_test_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_announcement"
+                app:fab_colorNormal="#A0C8F8"
+                app:fab_colorPressed="#92BBED"
+                app:fab_label="测试" />
+
 
         </com.github.clans.fab.FloatingActionMenu>
 

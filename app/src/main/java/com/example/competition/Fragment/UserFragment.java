@@ -63,12 +63,9 @@ public class UserFragment extends Fragment {
             startActivity(intent);
         });
 
-        binding.UserInfoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SignUpActivity.class);
-                startActivity(intent);
-            }
+        binding.UserInfoLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), SignUpActivity.class);
+            startActivity(intent);
         });
     }
 }
