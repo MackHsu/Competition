@@ -33,7 +33,7 @@ public class CompetitionDao extends DatabaseHelper {
          try {
              getConnection();
 
-             String sql = "SELECT competitionId,name FROM competition";
+             String sql = "SELECT competitionId,name,signUpDate1,signUpDate2,competitionDate1,competitionDate2,host,typeId,levelId FROM competition";
              List<String> parameters = new ArrayList<>();
              if (search != null || type != null || level != null ) {
                  sql += " WHERE";
@@ -139,5 +139,47 @@ public class CompetitionDao extends DatabaseHelper {
             closeAll();
         }
         return image;
+    }
+
+    public static String getTypeName(String typeId) {
+        String name = null;
+        try {
+            getConnection();
+
+            String sql = "SELECT name FROM ctype WHERE typeId=?;";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, typeId);
+            res = pStmt.executeQuery();
+
+            if (res.next()) {
+                name = res.getString("name");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return name;
+    }
+
+    public static String getLevelName(String levelId) {
+        String name = null;
+        try {
+            getConnection();
+
+            String sql = "SELECT name FROM clevel WHERE levelId=?;";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, levelId);
+            res = pStmt.executeQuery();
+
+            if (res.next()) {
+                name = res.getString("name");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return name;
     }
 }

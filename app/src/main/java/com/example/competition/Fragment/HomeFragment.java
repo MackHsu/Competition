@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,26 +50,6 @@ public class HomeFragment extends Fragment {
         mainHandler = new Handler(Looper.getMainLooper());
         initRecyclerView();
 
-        binding.competitionSearch.setOnClickListener((view -> {
-            Log.d(TAG, "onCreateView: menu clicked.");
-            new Thread(() -> {
-                Log.d(TAG, "run: thread stated.");
-                List<com.example.competition.Database.Model.Competition> list = CompetitionDao.getCompetition(null, null, null, 0, 1);
-
-                mainHandler.post(() -> {
-                    List<Competition> list2 = new ArrayList<>();
-                    for (com.example.competition.Database.Model.Competition item : list) {
-                        Competition competition = new Competition();
-                        competition.setName(item.getName());
-                        competition.setId(item.getCompetitionId());
-                        list2.add(competition);
-                        Log.d(TAG, "competition " + item.getName() + " added");
-                    }
-                    adapter.setList(list2);
-                });
-            }).start();
-        }));
-
         loadMore();
 
         return binding.getRoot();
@@ -101,9 +79,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadMore() {
-        Log.d(TAG, "loadMore: ");
         new Thread(() -> {
-            Log.d(TAG, "run: thread stated.");
             List<com.example.competition.Database.Model.Competition> list = CompetitionDao.getCompetition(null, null, null, 0, 1);
 
             mainHandler.post(() -> {
@@ -112,10 +88,15 @@ public class HomeFragment extends Fragment {
                 for (com.example.competition.Database.Model.Competition item : list) {
                     Competition competition = new Competition();
                     competition.setName(item.getName());
-                    Log.d(TAG, "competition id: " + item.getCompetitionId());
                     competition.setId(item.getCompetitionId());
+                    competition.setHost(item.getHost());
+                    competition.setType(item.getTypeId());
+                    competition.setLevel(item.getLevelId());
+                    competition.setSignUpDate1(item.getSignUpDate1());
+                    competition.setSignUpDate2(item.getSignUpDate2());
+                    competition.setCompetitionDate1(item.getCompetitionDate1());
+                    competition.setCompetitionDate2(item.getCompetitionDate2());
                     list2.add(competition);
-                    Log.d(TAG, "competition " + item.getName() + " added.");
                 }
 
                 if (list2.size() == 0) {
