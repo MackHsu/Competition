@@ -14,7 +14,7 @@ public class Competition implements Serializable {
     private String host;
     private String typeId;
     private String levelId;
-    private String desc;
+    private String description;
 
     public Competition(String competitionId, String name, String img, Date signUpDate1, Date signUpDate2, Date competitionDate1, Date competitionDate2, String host, String typeId, String levelId, String desc) {
         this.competitionId = competitionId;
@@ -27,7 +27,7 @@ public class Competition implements Serializable {
         this.host = host;
         this.typeId = typeId;
         this.levelId = levelId;
-        this.desc = desc;
+        this.description = desc;
     }
 
     public Competition() {
@@ -113,11 +113,11 @@ public class Competition implements Serializable {
         this.levelId = levelId;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

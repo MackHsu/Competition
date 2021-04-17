@@ -1,27 +1,21 @@
 package com.example.competition.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
-import android.view.View;
 
 import com.example.competition.Database.Dao.CompetitionDao;
+import com.example.competition.Database.Model.Competition;
 import com.example.competition.MyApp;
 import com.example.competition.R;
-import com.example.competition.RecyclerViewAdapter.DiscussListAdapter;
 import com.example.competition.databinding.ActivityCompetitionDetailBinding;
-import com.xuexiang.xui.widget.popupwindow.good.GoodView;
-import com.xuexiang.xui.widget.popupwindow.good.IGoodView;
 
-import java.sql.Blob;
+import java.text.SimpleDateFormat;
 
 public class CompetitionDetailActivity extends AppCompatActivity {
 
@@ -36,10 +30,40 @@ public class CompetitionDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         competitionId = getIntent().getStringExtra("competition_id");
         mainHandler = new Handler(Looper.getMainLooper());
-        Log.d(TAG, "onCreate: competition id: " + competitionId);
-//        setContentView(R.layout.activity_competition_detail);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_competition_detail);
 
+        setOnClickListener();
+        getData();
+
+
+    }
+
+    private void getData() {
+        new Thread(() -> {
+            Bitmap img = CompetitionDao.getImg(competitionId);
+            Competition competitionDetail = CompetitionDao.getCompetitionDetail(competitionId);
+            String typeName = CompetitionDao.getTypeName(competitionDetail.getTypeId());
+            String levelName = CompetitionDao.getLevelName(competitionDetail.getLevelId());
+            mainHandler.post(() -> {
+                binding.competitionDetailImg.setImageBitmap(img);
+                binding.competitionDetailName.setText(competitionDetail.getName());
+
+                String signUpDateStr1 = SimpleDateFormat.getDateTimeInstance().format(competitionDetail.getSignUpDate1());
+                String signUpDateStr2 = SimpleDateFormat.getDateTimeInstance().format(competitionDetail.getSignUpDate2());
+                String competitionDateStr1 = SimpleDateFormat.getDateTimeInstance().format(competitionDetail.getCompetitionDate1());
+                String competitionDateStr2 = SimpleDateFormat.getDateTimeInstance().format(competitionDetail.getCompetitionDate2());
+                binding.competitionDetailSignupTime.setText("报名时间：" + signUpDateStr1 + " - " + signUpDateStr2);
+                binding.competitionDetailTime.setText("比赛时间：" + competitionDateStr1 + " - " + competitionDateStr2);
+
+                binding.competitionDetailHost.setText(competitionDetail.getHost());
+                binding.competitionDetailDesc.setText(competitionDetail.getDescription().replace("\\n", "\n"));
+                binding.competitionDetailType.setText(typeName);
+                binding.competitionDetailLevel.setText(levelName);
+            });
+        }).start();
+    }
+
+    private void setOnClickListener() {
         binding.competitionDetailTitlebar.setLeftClickListener(view -> {
             finish();
         });
@@ -72,10 +96,5 @@ public class CompetitionDetailActivity extends AppCompatActivity {
             intent.putExtra("competition_id", competitionId);
             startActivity(intent);
         });
-
-        new Thread(() -> {
-            Bitmap img = CompetitionDao.getImg(competitionId);
-            mainHandler.post(() -> binding.competitionDetailImg.setImageBitmap(img));
-        }).start();
     }
 }

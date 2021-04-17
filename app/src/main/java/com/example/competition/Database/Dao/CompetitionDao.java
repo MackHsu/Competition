@@ -182,4 +182,33 @@ public class CompetitionDao extends DatabaseHelper {
         }
         return name;
     }
+
+    public static Competition getCompetitionDetail(String competitionId) {
+        Competition competition = null;
+        try {
+            getConnection();
+
+            String sql = "SELECT name,signUpDate1,signUpDate2,competitionDate1,competitionDate2,host,typeId,levelId,description FROM competition WHERE competitionId=?;";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, competitionId);
+            res = pStmt.executeQuery();
+
+            ResultSetMetaData rsmd = res.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+            while(res.next()) {
+                // 通过反射给competition中的字段赋值
+                competition = new Competition();
+                for (int i = 0; i < columnCount; i++) {
+                    Object value = res.getObject(i + 1);
+                    String columnLabel = rsmd.getColumnLabel(i + 1);
+                    Field field = Competition.class.getDeclaredField(columnLabel);
+                    field.setAccessible(true);
+                    field.set(competition, value);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return competition;
+    }
 }
