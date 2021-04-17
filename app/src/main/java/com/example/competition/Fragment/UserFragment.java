@@ -1,6 +1,9 @@
 package com.example.competition.Fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -44,6 +47,7 @@ public class UserFragment extends Fragment {
         binding = FragmentUserBinding.inflate(inflater);
         vm = new ViewModelProvider(getActivity()).get(UserViewModel.class);
         initActions();
+        checkSignedIn();
         return binding.getRoot();
     }
 
@@ -65,7 +69,28 @@ public class UserFragment extends Fragment {
 
         binding.UserInfoLayout.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), SignUpActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: requestCode: " + requestCode);
+        switch (requestCode) {
+            case 1:
+                if (resultCode == Activity.RESULT_OK) {
+                    checkSignedIn();
+                }
+                break;
+            default:
+        }
+
+    }
+
+    public void checkSignedIn() {
+        SharedPreferences sp = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userId = sp.getString("userId", "not signed in");
+        Log.d(TAG, "checkSignedIn: userId: " + userId);
     }
 }

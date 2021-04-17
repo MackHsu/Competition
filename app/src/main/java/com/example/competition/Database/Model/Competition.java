@@ -114,7 +114,7 @@ public class Competition implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return description.replace("\\n", "\n");
     }
 
     public void setDescription(String description) {

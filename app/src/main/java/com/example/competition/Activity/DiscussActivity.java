@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,6 +17,8 @@ import com.example.competition.Model.DiscussReply;
 import com.example.competition.R;
 import com.example.competition.RecyclerViewAdapter.DiscussReplyAdapter;
 import com.example.competition.databinding.ActivityDiscussBinding;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.xuexiang.xui.adapter.simple.AdapterItem;
 import com.xuexiang.xui.widget.popupwindow.popup.XUISimplePopup;
 
@@ -23,12 +27,14 @@ import java.util.List;
 
 public class DiscussActivity extends AppCompatActivity {
 
+    private String TAG = "DiscussActivity";
     private ActivityDiscussBinding binding;
     List<DiscussReply> replies = new ArrayList<>();
     private XUISimplePopup discussPopup1;
     private XUISimplePopup discussPopup2;
     private XUISimplePopup replyPopup1;
     private XUISimplePopup replyPopup2;
+    private DialogPlus dialogPlus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +48,38 @@ public class DiscussActivity extends AppCompatActivity {
         initMenuPopup();
         initTestData();
         initRecycler();
+        initDialog();
 
+        binding.discussAddReply.setOnClickListener((view -> {
+            dialogPlus.show();
+        }));
+    }
+
+    private void initDialog() {
+        dialogPlus = DialogPlus.newDialog(this)
+                .setContentHolder(new ViewHolder(R.layout.layout_new_reply_dialog))
+                .setFooter(R.layout.layout_new_recruitment_footer)
+                .setHeader(R.layout.layout_new_reply_header)
+                .setCancelable(true)
+                .setGravity(Gravity.CENTER)
+                .setOnClickListener((dialog, view) -> {
+                    switch (view.getId()) {
+                        case R.id.new_recruitment_cancel_btn:
+                            dialog.dismiss();
+                            break;
+                        case R.id.new_recruitment_confirm_btn:
+                            Log.d(TAG, "onClick: confirm");
+                            dialog.dismiss();
+                            break;
+                    }
+                })
+                .create();
     }
 
     private void initRecycler() {
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this) {
-//            @Override
-//            public boolean canScrollVertically() {
-//                return false;
-//            }
-//        };
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         binding.discussReplyRecycler.setLayoutManager(layoutManager);
         DiscussReplyAdapter adapter = new DiscussReplyAdapter(replies);
-//        adapter.setAnimationEnable(true);
-//        adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
-//        adapter.setAnimationFirstOnly(false);
-
         adapter.addChildClickViewIds(R.id.reply_actions_btn, R.id.discuss_actions_btn);
 
         adapter.setOnItemChildClickListener(new OnItemChildClickListener() {

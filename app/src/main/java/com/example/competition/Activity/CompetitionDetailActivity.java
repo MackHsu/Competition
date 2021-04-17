@@ -56,7 +56,7 @@ public class CompetitionDetailActivity extends AppCompatActivity {
                 binding.competitionDetailTime.setText("比赛时间：" + competitionDateStr1 + " - " + competitionDateStr2);
 
                 binding.competitionDetailHost.setText(competitionDetail.getHost());
-                binding.competitionDetailDesc.setText(competitionDetail.getDescription().replace("\\n", "\n"));
+                binding.competitionDetailDesc.setText(competitionDetail.getDescription());
                 binding.competitionDetailType.setText(typeName);
                 binding.competitionDetailLevel.setText(levelName);
             });

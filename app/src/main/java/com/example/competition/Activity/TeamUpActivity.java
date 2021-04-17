@@ -101,6 +101,7 @@ public class TeamUpActivity extends AppCompatActivity {
         dialogPlus = DialogPlus.newDialog(this)
                 .setContentHolder(new ViewHolder(R.layout.layout_new_recruitment_dialog))
                 .setFooter(R.layout.layout_new_recruitment_footer)
+                .setHeader(R.layout.layout_new_recruitment_header)
                 .setCancelable(true)
                 .setGravity(Gravity.CENTER)
                 .setOnClickListener((dialog, view) -> {

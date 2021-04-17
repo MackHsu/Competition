@@ -45,7 +45,6 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:text="TextView"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +55,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="TextView"
                     app:layout_constraintStart_toStartOf="@+id/competition_detail_name"
                     app:layout_constraintTop_toBottomOf="@+id/competition_detail_name" />
 
@@ -65,7 +63,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="TextView"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="@+id/competition_detail_host"
                     app:layout_constraintTop_toBottomOf="@+id/competition_detail_host" />
@@ -75,7 +72,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="TextView"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="@+id/competition_detail_signup_time"
                     app:layout_constraintTop_toBottomOf="@+id/competition_detail_signup_time" />
@@ -88,7 +84,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:ellipsize="end"
-                    android:text="description\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\ndescription\n"
+                    android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider5" />
@@ -117,7 +113,6 @@
                         android:id="@+id/competition_detail_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,7 +121,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="TextView"
                         app:layout_constraintStart_toEndOf="@+id/divider6"
                         app:layout_constraintTop_toTopOf="parent" />
 
