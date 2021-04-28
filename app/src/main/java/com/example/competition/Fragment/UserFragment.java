@@ -25,6 +25,9 @@ import com.example.competition.Model.MyRecruitment;
 import com.example.competition.MyApp;
 import com.example.competition.ViewModel.UserViewModel;
 import com.example.competition.databinding.FragmentUserBinding;
+import com.xuexiang.xui.adapter.simple.AdapterItem;
+import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
+import com.xuexiang.xui.widget.popupwindow.popup.XUISimplePopup;
 
 public class UserFragment extends Fragment {
 
@@ -32,6 +35,7 @@ public class UserFragment extends Fragment {
 
     UserViewModel vm;
     FragmentUserBinding binding;
+    private XUISimplePopup popup;
 
     public UserFragment() {
         // Required empty public constructor
@@ -48,7 +52,22 @@ public class UserFragment extends Fragment {
         vm = new ViewModelProvider(getActivity()).get(UserViewModel.class);
         initActions();
         checkSignedIn();
+        initPopup();
         return binding.getRoot();
+    }
+
+    private void initPopup() {
+        popup = new XUISimplePopup(getActivity(), new AdapterItem[] {
+                new AdapterItem("退出登录", null)
+        })
+                .create((adapter, item, position) -> {
+                    if (item.getTitle().toString().equals("退出登录")) {
+                        SharedPreferences.Editor editor = getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE).edit();
+                        editor.putString("userId", "");
+                        editor.commit();
+                        checkSignedIn();
+                    }
+                });
     }
 
     private void initActions() {
@@ -68,8 +87,13 @@ public class UserFragment extends Fragment {
         });
 
         binding.UserInfoLayout.setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), SignUpActivity.class);
-            startActivityForResult(intent, 1);
+            String userId = getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userId", "");
+            if (userId.equals("")) {
+                Intent intent = new Intent(getActivity(), SignUpActivity.class);
+                startActivityForResult(intent, 1);
+            } else {
+                popup.showDown(view);
+            }
         });
     }
 
@@ -90,7 +114,7 @@ public class UserFragment extends Fragment {
 
     public void checkSignedIn() {
         SharedPreferences sp = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        String userId = sp.getString("userId", "not signed in");
+        String userId = sp.getString("userId", "");
         Log.d(TAG, "checkSignedIn: userId: " + userId);
     }
 }

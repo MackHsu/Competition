@@ -1,30 +1,13 @@
 package com.example.competition.Model;
 
-public class Discuss {
-    private String discussId;
-    private String title;
-    private String date;
+import java.util.Date;
+
+public class Recruitment {
+    private String recruitmentId;
     private String competitionId;
     private String userId;
-
-    public Discuss() {
-    }
-
-    public String getDiscussId() {
-        return discussId;
-    }
-
-    public void setDiscussId(String discussId) {
-        this.discussId = discussId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    private String content;
+    private String date;
 
     public String getDate() {
         return date;
@@ -32,6 +15,14 @@ public class Discuss {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getRecruitmentId() {
+        return recruitmentId;
+    }
+
+    public void setRecruitmentId(String recruitmentId) {
+        this.recruitmentId = recruitmentId;
     }
 
     public String getCompetitionId() {
@@ -48,5 +39,16 @@ public class Discuss {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Recruitment() {
     }
 }

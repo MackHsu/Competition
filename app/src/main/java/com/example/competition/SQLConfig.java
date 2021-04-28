@@ -10,6 +10,6 @@ public class SQLConfig {
 
     public static String getURL() {
         return "jdbc:mysql://" + IP + "/" + SCHEMA
-                + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+                + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8";
     }
 }

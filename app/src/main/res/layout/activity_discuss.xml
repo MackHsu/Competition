@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tb_titleText="Discuss Title"
+            app:tb_titleText="经验交流"
             app:tb_useThemeColor="false">
 
         </com.xuexiang.xui.widget.actionbar.TitleBar>

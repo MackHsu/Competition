@@ -82,12 +82,14 @@ public class CompetitionDetailActivity extends AppCompatActivity {
         binding.competitionDetailTeam.setOnClickListener(view -> {
             binding.competitionDetailFloatingMenu.close(true);
             Intent intent = new Intent(MyApp.getContext(), TeamUpActivity.class);
+            intent.putExtra("competitionId", competitionId);
             startActivity(intent);
         });
 
         binding.competitionDetailDiscuss.setOnClickListener(view -> {
             binding.competitionDetailFloatingMenu.close(true);
             Intent intent = new Intent(MyApp.getContext(), DiscussListActivity.class);
+            intent.putExtra("competitionId", competitionId);
             startActivity(intent);
         });
 

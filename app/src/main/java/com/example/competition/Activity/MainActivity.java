@@ -89,4 +89,11 @@ public class MainActivity extends AppCompatActivity {
 
         currentFragment = fragment;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UserFragment uf = (UserFragment) fragments.get(USER_FRAGMENT);
+        uf.checkSignedIn();
+    }
 }

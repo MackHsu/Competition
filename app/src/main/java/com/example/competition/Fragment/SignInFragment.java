@@ -64,7 +64,7 @@ public class SignInFragment extends Fragment {
                         Toast.makeText(MyApp.getContext(), "登陆成功", Toast.LENGTH_SHORT).show();
                         SharedPreferences.Editor editor = MyApp.getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE).edit();
                         editor.putString("userId", userId);
-                        editor.apply();
+                        editor.commit();
                         finishWithResult(Activity.RESULT_OK);
                     }
                 });

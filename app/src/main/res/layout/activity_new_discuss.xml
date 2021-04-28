@@ -12,20 +12,21 @@
         android:layout_height="match_parent"
         tools:context=".Activity.NewDiscussActivity">
 
-        <EditText
-            android:id="@+id/editTextTextMultiLine"
+        <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+            android:id="@+id/new_discuss_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:lines="1"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:met_maxCharacters="30" />
 
         <TextView
             android:id="@+id/textView"
@@ -45,7 +46,7 @@
             android:layout_marginTop="32dp"
             android:text="内容："
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+            app:layout_constraintTop_toBottomOf="@+id/new_discuss_title" />
 
         <com.xuexiang.xui.widget.actionbar.TitleBar
             android:id="@+id/new_discuss_titlebar"
@@ -61,6 +62,7 @@
         </com.xuexiang.xui.widget.actionbar.TitleBar>
 
         <com.xuexiang.xui.widget.edittext.MultiLineEditText
+            android:id="@+id/new_discuss_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

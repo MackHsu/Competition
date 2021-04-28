@@ -53,4 +53,24 @@ public class UserDao extends DatabaseHelper {
         }
         return userId;
     }
+
+    public static String getUserName(String userId) {
+        String name = null;
+        try {
+            getConnection();
+
+            String sql = "SELECT name FROM user WHERE userId=?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, userId);
+            res = pStmt.executeQuery();
+            if (res.next()) {
+                name = res.getString("name");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return name;
+    }
 }

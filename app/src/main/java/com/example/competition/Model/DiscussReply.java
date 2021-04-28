@@ -6,55 +6,64 @@ import java.util.Date;
 
 public class DiscussReply implements MultiItemEntity {
 
-    private int id;
-    private int index;
-    private Date time;
-    private int replyIndex;
-    private String content;
     private int itemType;
+    private String replyId;
+    private String discussId;
+    private String userId;
+    private String date;
+    private String content;
+    private String replyUserId;
 
-    public static final int DISCUSS = 0;
-    public static final int REPLY = 1;
+    public static final int DISCUSS = 1;
+    public static final int REPLY = 0;
+
+    public String getReplyUserId() {
+        return replyUserId;
+    }
+
+    public void setReplyUserId(String replyUserId) {
+        this.replyUserId = replyUserId;
+    }
 
     public DiscussReply() {
-        id = 0;
-        index = 0;
-        time = new Date();
-        replyIndex = 0;
-        content = "test content";
-        itemType = DISCUSS;
+        itemType = REPLY;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public int getItemType() {
+        return itemType;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getReplyId() {
+        return replyId;
     }
 
-    public int getIndex() {
-        return index;
+    public void setReplyId(String replyId) {
+        this.replyId = replyId;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public String getDiscussId() {
+        return discussId;
     }
 
-    public Date getTime() {
-        return time;
+    public void setDiscussId(String discussId) {
+        this.discussId = discussId;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public String getUserId() {
+        return userId;
     }
 
-    public int getReplyIndex() {
-        return replyIndex;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public void setReplyIndex(int replyIndex) {
-        this.replyIndex = replyIndex;
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getContent() {
@@ -63,11 +72,6 @@ public class DiscussReply implements MultiItemEntity {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    @Override
-    public int getItemType() {
-        return itemType;
     }
 
     public void setItemType(int itemType) {
