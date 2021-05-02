@@ -8,8 +8,11 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.competition.Database.Dao.CompetitionDao;
+import com.example.competition.Database.Dao.UserDao;
 import com.example.competition.Database.Model.Competition;
 import com.example.competition.MyApp;
 import com.example.competition.R;
@@ -69,14 +72,27 @@ public class CompetitionDetailActivity extends AppCompatActivity {
         });
 
         binding.competitionDetailFav.setOnClickListener(view -> {
-            if (fav) {
-                binding.competitionDetailFav.setImageResource(R.drawable.ic_favorite_4);
-                binding.competitionDetailFav.setLabelText("添加收藏");
-            } else {
-                binding.competitionDetailFav.setImageResource(R.drawable.ic_favorite_3);
-                binding.competitionDetailFav.setLabelText("取消收藏");
+            String userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
+            if (userId.equals("")) {
+                Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, SignUpActivity.class);
+                startActivity(intent);
             }
-            fav = !fav;
+
+            binding.competitionDetailFloatingMenu.close(true);
+            new Thread(() -> {
+                String favCompetitionId = UserDao.addFavoriteCompetition(userId, competitionId);
+                if (favCompetitionId == null) {
+                    mainHandler.post(() -> {
+                        Toast.makeText(this, "收藏失败，您已收藏过该竞赛", Toast.LENGTH_SHORT).show();
+                    });
+                }
+                else {
+                    mainHandler.post(() -> {
+                        Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }).start();
         });
 
         binding.competitionDetailTeam.setOnClickListener(view -> {

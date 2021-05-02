@@ -445,4 +445,56 @@ public class CompetitionDao extends DatabaseHelper {
         }
         return title;
     }
+
+    public static int deleteDiscuss(String discussId) {
+        int iRow = 0;
+        try {
+            getConnection();
+            String sql = "DELETE FROM reply WHERE discussId=?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, discussId);
+            pStmt.executeUpdate();
+            sql = "DELETE FROM discuss WHERE discussId=?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, discussId);
+            iRow = pStmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return iRow;
+    }
+
+    public static int deleteReply(String replyId) {
+        int iRow = 0;
+        try {
+            getConnection();
+            String sql = "DELETE FROM reply WHERE replyId=?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, replyId);
+            iRow = pStmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return iRow;
+    }
+
+    public static int deleteRecruitment(String recruitmentId) {
+        int iRow = 0;
+        try {
+            getConnection();
+            String sql = "DELETE FROM recruitment WHERE recruitmentId=?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, recruitmentId);
+            iRow = pStmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return iRow;
+    }
 }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.example.competition.Database.Dao.CompetitionDao;
+import com.example.competition.Database.Dao.UserDao;
 import com.example.competition.Model.Discuss;
 import com.example.competition.Model.DiscussReply;
 import com.example.competition.R;
@@ -45,6 +46,7 @@ public class DiscussActivity extends AppCompatActivity {
     private String discussId;
     private String competitionId;
     private int pageSize = 20;
+    private int selected = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class DiscussActivity extends AppCompatActivity {
         initDialog();
 
         binding.discussAddReply.setOnClickListener((view -> {
+            selected = -1;
             dialogPlus.show();
         }));
 
@@ -85,7 +88,8 @@ public class DiscussActivity extends AppCompatActivity {
                         case R.id.new_recruitment_confirm_btn:
                             MultiLineEditText editText = dialog.getHolderView().findViewById(R.id.new_reply_content);
                             String content = editText.getContentText();
-                            newReply(content);
+                            newReply(selected == -1 ? null : adapter.getItem(selected).getUserId(),
+                                    content);
                             break;
                     }
                 })
@@ -102,17 +106,27 @@ public class DiscussActivity extends AppCompatActivity {
         adapter.getLoadMoreModule().setAutoLoadMore(true);
         adapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(true);
 
-        adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                switch (view.getId()) {
-                    case R.id.discuss_actions_btn:
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            String userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
+            String thisUserId = this.adapter.getItem(position).getUserId();
+            boolean flag = userId.equals("") || !userId.equals(thisUserId);
+            switch (view.getId()) {
+                case R.id.discuss_actions_btn:
+                    selected = position;
+                    if (flag) {
                         discussPopup1.showDown(view);
-                        break;
-                    case R.id.reply_actions_btn:
+                    } else {
+                        discussPopup2.showDown(view);
+                    }
+                    break;
+                case R.id.reply_actions_btn:
+                    selected = position;
+                    if (flag) {
                         replyPopup1.showDown(view);
-                        break;
-                }
+                    } else {
+                        replyPopup2.showDown(view);
+                    }
+                    break;
             }
         });
 
@@ -138,7 +152,7 @@ public class DiscussActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void newReply(String content) {
+    private void newReply(String replyUserId, String content) {
         new Thread(() -> {
             String userId = getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
             if (userId.equals("")) {
@@ -147,7 +161,7 @@ public class DiscussActivity extends AppCompatActivity {
                 startActivity(intent);
                 return;
             }
-            String replyId = CompetitionDao.newReply(discussId, content, userId, null);
+            String replyId = CompetitionDao.newReply(discussId, content, userId, replyUserId);
             if (replyId != null) {
                 mainHandler.post(() -> {
                     Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
@@ -171,21 +185,41 @@ public class DiscussActivity extends AppCompatActivity {
         discussPopup1 = new XUISimplePopup(this, new AdapterItem[] {
                 new AdapterItem("收藏", null)
         }).create((adapter, item, position) -> {
-            Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+            switch (item.getTitle().toString()) {
+                case "收藏":
+                    addFavoriteReply(this.adapter.getItem(selected).getReplyId());
+                    break;
+            }
         });
 
         discussPopup2 = new XUISimplePopup(this, new AdapterItem[] {
                 new AdapterItem("收藏", null),
                 new AdapterItem("删除", null)
         }).create((adapter, item, position) -> {
-            Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+            switch (item.getTitle().toString()) {
+                case "收藏":
+                    addFavoriteReply(this.adapter.getItem(selected).getReplyId());
+                    break;
+                case "删除":
+                    deleteDiscuss(this.adapter.getItem(selected).getUserId(),
+                            this.adapter.getItem(selected).getDiscussId());
+                    break;
+            }
         });
 
         replyPopup1 = new XUISimplePopup(this, new AdapterItem[] {
                 new AdapterItem("收藏", null),
                 new AdapterItem("回复", null)
         }).create((adapter, item, position) -> {
-            Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+            switch (item.getTitle().toString()) {
+                case "收藏":
+                    addFavoriteReply(this.adapter.getItem(selected).getReplyId());
+                    break;
+                case "回复":
+                    selected = position;
+                    dialogPlus.show();
+                    break;
+            }
         });
 
         replyPopup2 = new XUISimplePopup(this, new AdapterItem[] {
@@ -193,9 +227,85 @@ public class DiscussActivity extends AppCompatActivity {
                 new AdapterItem("回复", null),
                 new AdapterItem("删除", null)
         }).create((adapter, item, position) -> {
-            Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+            switch (item.getTitle().toString()) {
+                case "收藏":
+                    addFavoriteReply(this.adapter.getItem(selected).getReplyId());
+                    break;
+                case "删除":
+                    deleteReply(this.adapter.getItem(selected).getUserId(),
+                            this.adapter.getItem(selected).getReplyId());
+                    break;
+                case "回复":
+                    selected = position;
+                    dialogPlus.show();
+                    break;
+            }
         });
 
+    }
+
+    private void addFavoriteReply(String replyId) {
+        String userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
+        if (userId.equals("")) {
+            Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, SignUpActivity.class);
+            startActivity(intent);
+        }
+
+        new Thread(() -> {
+            String favReplyId = UserDao.addFavoriteReply(userId, replyId);
+            if (favReplyId == null) {
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "收藏失败，您已收藏过该讨论", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
+                });
+            }
+        }).start();
+    }
+
+    private void deleteDiscuss(String thisUserId, String discussId) {
+        String userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
+        if (userId.equals("") || !userId.equals(thisUserId)) {
+            Toast.makeText(this, "错误，用户不一致", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        new Thread(() -> {
+            int iRow = CompetitionDao.deleteDiscuss(discussId);
+            if (iRow == 0) {
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "删除失败", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
+                    finishActivity();
+                });
+            }
+        }).start();
+    }
+
+    private void deleteReply(String thisUserId, String replyId) {
+        String userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
+        if  (userId.equals("") || !userId.equals(thisUserId)) {
+            Toast.makeText(this, "错误，用户不一致", Toast.LENGTH_SHORT).show();
+        }
+
+        new Thread(() -> {
+            int iRow = CompetitionDao.deleteReply(replyId);
+            if (iRow == 0) {
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "删除失败", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
+                    loadMore(true);
+                });
+            }
+        }).start();
     }
 
     private void finishActivity() {

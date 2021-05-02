@@ -37,7 +37,6 @@ public class NewDiscussActivity extends AppCompatActivity {
                     @Override
                     public void performAction(View view) {
                         if (!inputCheck()) return;
-                        Log.d(TAG, "performAction: check true");
                         String title = binding.newDiscussTitle.getEditValue();
                         String content = binding.newDiscussContent.getContentText();
                         String userId = getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
@@ -49,7 +48,6 @@ public class NewDiscussActivity extends AppCompatActivity {
                         }
                         new Thread(() -> {
                             String discussId = CompetitionDao.newDiscuss(title, competitionId, userId, content);
-                            Log.d(TAG, "performAction: discussId: " + discussId);
                             if (discussId != null) {
                                 mainHandler.post(() -> {
                                     Toast.makeText(NewDiscussActivity.this, "成功发布讨论", Toast.LENGTH_SHORT).show();

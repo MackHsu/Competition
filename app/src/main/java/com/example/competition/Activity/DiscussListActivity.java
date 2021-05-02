@@ -89,9 +89,6 @@ public class DiscussListActivity extends AppCompatActivity {
             startActivityForResult(intent, 1);
         });
 
-        adapter.addChildClickViewIds(R.id.discuss_list_item_action_btn);
-        adapter.setOnItemChildClickListener((adapter1, view, position) -> popup1.showDown(view));
-
         binding.discussListRecycler.setAdapter(adapter);
     }
 

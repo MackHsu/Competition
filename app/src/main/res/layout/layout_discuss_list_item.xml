@@ -24,16 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/discuss_list_item_action_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintBottom_toTopOf="@+id/divider14"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_three_dots_2" />
-
                 <TextView
                     android:id="@+id/discuss_list_item_title"
                     android:layout_width="0dp"
@@ -41,9 +31,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="discuss title"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@+id/discuss_list_item_action_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,7 +42,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:text="username"
                     app:layout_constraintBottom_toBottomOf="@+id/discuss_list_item_avatar"
                     app:layout_constraintStart_toEndOf="@+id/discuss_list_item_avatar"
                     app:layout_constraintTop_toTopOf="@+id/discuss_list_item_avatar" />
@@ -66,7 +54,6 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:minLines="3"
-                    android:text="content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider14" />
@@ -76,7 +63,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="time"
                     app:layout_constraintBottom_toBottomOf="@+id/discuss_list_item_avatar"
                     app:layout_constraintStart_toEndOf="@+id/discuss_list_item_username"
                     app:layout_constraintTop_toTopOf="@+id/discuss_list_item_avatar" />

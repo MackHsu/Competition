@@ -33,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/reply_avatar" />
 
@@ -43,7 +42,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/divider8"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,7 +50,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/reply_index"
                 app:layout_constraintTop_toTopOf="@+id/reply_index" />
 
@@ -63,17 +60,17 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:background="#DCDCDC"
-                android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/divider8"
                 app:layout_constraintTop_toBottomOf="@+id/divider9" />
 
             <TextView
                 android:id="@+id/reply_content"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/divider8"
                 app:layout_constraintTop_toBottomOf="@+id/reply_reply_text" />
 

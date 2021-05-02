@@ -53,7 +53,12 @@ public class DiscussReplyAdapter extends BaseMultiItemQuickAdapter<DiscussReply,
                 discussReplyViewHolder.setText(R.id.reply_reply_text, "");
                 new Thread(() -> {
                     String userName = UserDao.getUserName(discussReply.getUserId());
-                    mainHandler.post(() -> discussReplyViewHolder.setText(R.id.reply_username, userName));
+                    String replyUserId = discussReply.getReplyUserId();
+                    String replyUserName = replyUserId == null ? null : UserDao.getUserName(discussReply.getReplyUserId());
+                    mainHandler.post(() -> {
+                        discussReplyViewHolder.setText(R.id.reply_username, userName);
+                        discussReplyViewHolder.setText(R.id.reply_reply_text, replyUserName == null ? "" : "回复 " + replyUserName + ":");
+                    });
                 }).start();
                 break;
         }

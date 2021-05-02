@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.example.competition.Database.Dao.CompetitionDao;
+import com.example.competition.Database.Dao.UserDao;
 import com.example.competition.Model.Recruitment;
 import com.example.competition.R;
 import com.example.competition.RecyclerViewAdapter.TeamMemberRecruitmentAdapter;
@@ -38,6 +39,7 @@ public class TeamUpActivity extends AppCompatActivity {
     private String competitionId;
     private Handler mainHandler;
     private TeamMemberRecruitmentAdapter adapter;
+    private int selected;
 
     private static int pageSize = 10;
 
@@ -53,7 +55,7 @@ public class TeamUpActivity extends AppCompatActivity {
         initRecycler();
         initDialog();
 
-        loadMore();
+        loadMore(true);
 
         binding.teamUpTitlebar.setLeftClickListener(view -> {
             finish();
@@ -81,13 +83,22 @@ public class TeamUpActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         binding.teamUpRecycler.setLayoutManager(manager);
         adapter = new TeamMemberRecruitmentAdapter(R.layout.layout_team_member_recruitment_item);
-        adapter.getLoadMoreModule().setOnLoadMoreListener(this::loadMore);
+        adapter.getLoadMoreModule().setOnLoadMoreListener(() -> loadMore(false));
         adapter.getLoadMoreModule().setEnableLoadMore(true);
         adapter.getLoadMoreModule().setAutoLoadMore(true);
         adapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(true);
 
         adapter.addChildClickViewIds(R.id.team_action_btn);
-        adapter.setOnItemChildClickListener((adapter, view, position) -> popup1.showDown(view));
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            selected = position;
+            String userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
+            String thisUserId = this.adapter.getItem(position).getUserId();
+            if (userId.equals("") || !userId.equals(thisUserId)) {
+                popup1.showDown(view);
+            } else {
+                popup2.showDown(view);
+            }
+        });
 
         binding.teamUpRecycler.setAdapter(adapter);
     }
@@ -97,15 +108,27 @@ public class TeamUpActivity extends AppCompatActivity {
                 new AdapterItem("收藏", null)
         })
             .create((adapter, item, position) -> {
-                Log.d(TAG, "You clicked " + position + ", " + item.getTitle().toString());
+                switch (item.getTitle().toString()) {
+                    case "收藏":
+                        addFavRecruitment(this.adapter.getItem(selected).getRecruitmentId());
+                        break;
+                }
             });
 
-        popup1 = new XUISimplePopup(this, new AdapterItem[] {
+        popup2 = new XUISimplePopup(this, new AdapterItem[] {
                 new AdapterItem("收藏", null),
                 new AdapterItem("删除", null)
         })
                 .create((adapter, item, position) -> {
-                    Log.d(TAG, "You clicked " + position + ", " + item.getTitle().toString());
+                    switch (item.getTitle().toString()) {
+                        case "收藏":
+                            addFavRecruitment(this.adapter.getItem(selected).getRecruitmentId());
+                            break;
+                        case "删除":
+                            deleteRecruitment(this.adapter.getItem(selected).getUserId(),
+                                    this.adapter.getItem(selected).getRecruitmentId());
+                            break;
+                    }
                 });
     }
 
@@ -155,21 +178,65 @@ public class TeamUpActivity extends AppCompatActivity {
                 .create();
     }
 
-    private void loadMore() {
+    private void loadMore(boolean isNew) {
+        int start = isNew ? 0 : adapter.getItemCount();
         new Thread(() -> {
-            List<Recruitment> list = CompetitionDao.getRecruitmentList(competitionId, adapter.getItemCount(), pageSize);
+            List<Recruitment> list = CompetitionDao.getRecruitmentList(competitionId, start, pageSize);
             mainHandler.post(() -> {
                 if (list.size() == 0) {
                     adapter.getLoadMoreModule().loadMoreEnd();
                     return;
                 }
                 adapter.getLoadMoreModule().loadMoreComplete();
-                if (adapter.getItemCount() == 0) {
+                if (isNew || adapter.getItemCount() == 0) {
                     adapter.setList(list);
                 } else {
                     adapter.addData(list);
                 }
             });
+        }).start();
+    }
+
+    private void addFavRecruitment(String recruitmentId) {
+        String userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
+        if (userId.equals("")) {
+            Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, SignUpActivity.class);
+            startActivity(intent);
+        }
+
+        new Thread(() -> {
+            String favRecruitmentId = UserDao.addFavoriteRecruitment(userId, recruitmentId);
+            if (favRecruitmentId == null) {
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "收藏失败，您已收藏过该组队需求", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
+                });
+            }
+        }).start();
+    }
+
+    private void deleteRecruitment(String thisUserId, String recruitmentId) {
+        String userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
+        if (userId.equals("") || !userId.equals(thisUserId)) {
+            Toast.makeText(this, "错误，用户不一致", Toast.LENGTH_SHORT).show();
+        }
+
+        new Thread(() -> {
+            int iRow = CompetitionDao.deleteRecruitment(recruitmentId);
+            if (iRow == 0) {
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "删除失败", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
+                    loadMore(true);
+                });
+            }
         }).start();
     }
 }
