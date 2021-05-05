@@ -88,15 +88,27 @@ public class TeamUpActivity extends AppCompatActivity {
         adapter.getLoadMoreModule().setAutoLoadMore(true);
         adapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(true);
 
-        adapter.addChildClickViewIds(R.id.team_action_btn);
+        adapter.addChildClickViewIds(R.id.team_action_btn, R.id.team_avatar);
         adapter.setOnItemChildClickListener((adapter, view, position) -> {
-            selected = position;
+            Log.d(TAG, "initRecycler: test");
             String userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "");
-            String thisUserId = this.adapter.getItem(position).getUserId();
-            if (userId.equals("") || !userId.equals(thisUserId)) {
-                popup1.showDown(view);
-            } else {
-                popup2.showDown(view);
+            switch (view.getId()) {
+                case R.id.team_action_btn:
+                    selected = position;
+                    String thisUserId = this.adapter.getItem(position).getUserId();
+                    if (userId.equals("") || !userId.equals(thisUserId)) {
+                        popup1.showDown(view);
+                    } else {
+                        popup2.showDown(view);
+                    }
+                    break;
+                case R.id.team_avatar:
+                    String user2Id = this.adapter.getItem(position).getUserId();
+                    if (userId.equals("") || userId.equals(user2Id)) break;
+                    Intent intent = new Intent(this, ConversationActivity.class);
+                    intent.putExtra("user2Id", user2Id);
+                    startActivity(intent);
+                    break;
             }
         });
 
